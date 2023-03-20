@@ -2,7 +2,7 @@
 # Requisitos técnicos
 ## Gramática livre de contexto
 
-Uma gramática livre de contexto (GLC) é uma gramática formal onde todas as regras de produções são da forma A → α1. Em teoria de linguagens formais, uma linguagem livre de contexto (LLC) é uma linguagem gerada por alguma GLC2.
+Uma gramática livre de contexto (GLC) é uma gramática formal onde todas as regras de produções são da forma A → α. Em teoria de linguagens formais, uma linguagem livre de contexto (LLC) é uma linguagem gerada por alguma GLC.
 
 ---
 Aqui está um exemplo de uma gramática livre de contexto que gera a linguagem de todas as cadeias de “a” e “b” com o mesmo número de “a” e “b”:
