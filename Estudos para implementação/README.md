@@ -10,7 +10,8 @@ Aqui está um exemplo de uma gramática livre de contexto que gera a linguagem d
 **S → aSbS | bSaS | ε**
 
 Neste exemplo, S é o símbolo inicial (não-terminal) e a e b são os símbolos terminais. A regra S → aSbS significa que podemos substituir o símbolo S por aSbS. A regra S → ε significa que podemos substituir o símbolo S por uma cadeia vazia (ε).
---
+
+---
 ## Tokens
 Tokens são os símbolos terminais em uma gramática. Eles representam as unidades básicas de uma linguagem e são gerados pelas regras de produção da gramática.
 
@@ -47,7 +48,8 @@ Aqui está uma possível árvore de análise sintática para a sequência de tok
                     4         1
 
 Esta árvore mostra como a sequência de tokens pode ser derivada pelas regras da gramática. A partir desta árvore podemos determinar que a sequência de tokens é válida de acordo com as regras da linguagem.
---
+
+---
 ## Expressões regulares 
 Expressões regulares são padrões que descrevem conjuntos de cadeias de caracteres. Elas podem ser usadas para definir os padrões dos tokens em uma gramática.
 
