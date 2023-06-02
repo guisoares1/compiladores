@@ -225,9 +225,9 @@ class Analyzer:
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
-            token = Token(token.DIV, token.NONE, line, col)
+            token = Token(TokenEnum.DIV, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
-            return token.DIV 
+            return TokenEnum.DIV 
         
           case 't9':
             print("lex - Fim do arquivo")
@@ -274,28 +274,28 @@ class Analyzer:
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
-            token = Token(token.INUM, token.NONE, line, col, )
+            token = Token(TokenEnum.INUM, TokenEnum.NONE, line, col, )
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
-            return token.INUM 
+            return TokenEnum.INUM 
           
           case 't18':
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
-            token = Token(token.PFNUM, token.NONE, line, col)
+            token = Token(TokenEnum.PFNUM, TokenEnum.NONE, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
-            return token.PFNUM 
+            return TokenEnum.PFNUM 
           
           case 't19':
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
-            token = Token(token.NCNUM, token.NONE, line, col)
+            token = Token(TokenEnum.NCNUM, TokenEnum.NONE, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
-            return token.NCNUM 
+            return TokenEnum.NCNUM 
           
           #################### ConstChar ####################
           case '62':
@@ -306,9 +306,9 @@ class Analyzer:
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
-            token = Token(token.CONCHAR, token.NONE, line, col)
+            token = Token(TokenEnum.CONCHAR, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
-            return token.CONCHAR 
+            return TokenEnum.CONCHAR 
           
           ################### comentario ###################
           case '17':
@@ -354,7 +354,7 @@ class Analyzer:
             lookahead = True
             self.source_code.seek(-1, 1)
             w = w[:-1]
-            token = Token(token.ID, token.NONE, line, col)
+            token = Token(TokenEnum.ID, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
             st.insert(token)
             return token.ID
@@ -519,12 +519,110 @@ class Analyzer:
           
           ################### int ###################
           case '19':
-            if c == 'o':   # flo
-              state = 27
+            if c == 'n':   # in
+              state = 33
             elif c not in (self.digitos or c in self.letra_): 
               state = 't24'   # ID lookahead 
             else:
               state = '12'  # outros
+          
+          case '33':
+            if c == 't':   # int
+              state = 34
+            elif c not in (self.digitos or c in self.letra_): 
+              state = 't24'   # ID lookahead 
+            else:
+              state = '12'  # outros
+
+          case '34':
+            if c not in (self.digitos or c in self.letra_):
+              state = 't28'
+            else:
+              state = '12'  # outros
+          
+          case 't28':
+            state = 0
+            lookahead = True
+            self.source_code.seek(-1, 1)
+            w = w[:-1]
+            token = Token(token.INT, token.NONE, line, col)
+            print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
+            return token.INT
+          
+          ################### char ###################
+          case '7':
+            if c == 'h':   # ch
+              state = 35
+            elif c not in (self.digitos or c in self.letra_): 
+              state = 't24'   # ID lookahead 
+            else:
+              state = '12'  # outros
+
+          case '35':
+            if c == 'a':   # cha
+              state = 36
+            elif c not in (self.digitos or c in self.letra_): 
+              state = 't24'   # ID lookahead 
+            else:
+              state = '12'  # outros
+
+          case '36':
+            if c == 'r':   # char
+              state = 37
+            elif c not in (self.digitos or c in self.letra_): 
+              state = 't24'   # ID lookahead 
+            else:
+              state = '12'  # outros
+          
+          case '37':
+            if c not in (self.digitos or c in self.letra_):
+              state = 't29'
+            else:
+              state = '12'  # outros
+
+          case 't29':
+            state = 0
+            lookahead = True
+            self.source_code.seek(-1, 1)
+            w = w[:-1] 
+            token = Token(token.CHAR, token.NONE, line, col)
+            print(f"[lexical] Token {token.name}, {token.attribute}, w: {w.strip()}")
+            return token.CHAR
+        
+          ################### senao ###################
+          case '8':
+            if c == 'e':   # se
+              state = 38
+            elif c not in (self.digitos or c in self.letra_): 
+              state = 't24'   # ID lookahead 
+            else:
+              state = '12'  # outros
+
+          case '38':
+            if c == 'n':   # sen
+              state = 39
+            elif c not in (self.digitos or c in self.letra_):
+              state = 40
+            else:
+              state = '12'  # outros
+
+          case '39':
+            if c == 'a':   # sena
+              state = 41
+          
+          case '41':
+            if c == 'o':   # senao
+              state = 41
+
+          
+
+
+
+
+
+
+
+
 
 
 
