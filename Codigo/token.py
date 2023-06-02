@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum, auto
 
-class Token(Enum):
+class TokenEnum(Enum):
     NONE = -1
     FUNCTION = auto()
     ACHA = auto() # {
