@@ -67,6 +67,7 @@ class Token: # trocar nome atributos
     attribute: int
     line: int
     col: int
+    lexema: str
 
     def __repr__(self) -> str:
         return f'Token <{Token(self.name).name}, {Token(self.attribute).name}> l:{self.line} c:{self.col}'
