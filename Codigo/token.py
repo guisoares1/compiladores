@@ -38,6 +38,8 @@ class TokenEnum(Enum):
     ATE = auto() 
     CONCHAR = auto() # constante char
     EOF = auto() # end of file $
+    ENTAO = auto()
+    REPITA = auto()
 
     # tipos já existentes antes
     PROGRAMA = auto()
