@@ -66,10 +66,9 @@ class TokenEnum(Enum):
 class Token: # trocar nome atributos
     """Tokens serão representados na forma <Token.name, Token.Attribute>"""
     name: int
-    attribute: int
+    attribute: str
     line: int
     col: int
-    lexema: str
 
     def __repr__(self) -> str:
         return f'Token <{Token(self.name).name}, {Token(self.attribute).name}> l:{self.line} c:{self.col}'
