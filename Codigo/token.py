@@ -36,41 +36,19 @@ class TokenEnum(Enum):
     INUM = auto()
     PFNUM = auto() # ponto fixo (PF) 
     NCNUM = auto() # notação científica (NC)
-    ATE = auto() 
+    ATE = 'ATE' 
     CONCHAR = 'CONSCHAR'
-    EOF = auto() # end of file $
+    EOF = '$' # end of file $
     ENTAO = "ENTAO"
     REPITA = "REPITA"
 
-    # tipos já existentes antes
-    PROGRAMA = auto()
-    BEGIN = auto()
-    END = auto()
-    TYPE = auto()
-    NUM = auto()
-    FNUM = auto()
-    LITERAL = auto()
-    ATTR = auto() # := 
-    IF = auto()
-    THEN = auto()
-    ELSE = auto()
-    REPEAT = auto()
-    WHILE = auto()
-    DO = auto()
-    LPAR = auto() # LPAR (
-    RPAR = auto() # RPAR )
-    DD = auto() # double dot :
-    CD = auto() # comma dot ;
-    COMMA = auto() # comma ,
-
 @dataclass(init=True)
-class Token: # trocar nome atributos
-    """Tokens serão representados na forma <Token.name, Token.Attribute>"""
-    name: int
-    attribute: int
-    line: int
-    col: int
+class Token:
+    nome: TokenEnum
+    atributo: str
+    linha: int
+    coluna: int
 
     def __repr__(self) -> str:
-        return f'Token <{Token(self.name).name}, {Token(self.attribute).name}> l:{self.line} c:{self.col}'
+        return f'Token <{Token(self.nome).nome}, {Token(self.atributo).nome}> l:{self.linha} c:{self.coluna}'
 

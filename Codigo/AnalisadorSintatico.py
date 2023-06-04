@@ -1,18 +1,16 @@
 import pandas as pd
 import numpy as np
-from Codigo.lexico import Analyzer
-
-import lexico 
+from Token import TokenEnum
+from lexico import Analyzer
+import os
 
 #Vetor de Producoes
-df2 = pd.read_excel('vetorProducoes.xlsx')
+df2 = pd.read_excel('producoes.xlsx')
 vetor_producoes = np.asarray(df2)
 
 #Tabela de Análise Preditiva
-df1 = pd.read_excel('tabelaPreditivaExcel.xlsx')
+df1 = pd.read_excel('preditivo.xlsx')
 tabela_preditiva = np.asarray(df1)
-
-
 
 #Numero de Linhas e Colunas da Tabela de Análise Preditiva
 numero_linhasTab = df1.shape[0]
@@ -35,10 +33,8 @@ def pega_linha_coluna(simbolo):
 
 #Função que retorna valores da tabela, dado um Não Terminal e um Terminal. Ex: pegaValorTabela("declaracao_das_variaveis","identificador")
 def pegaValorTabela(NTerminal, Terminal):
-    #print('Nterminal', NTerminal)
-    #print('terminal', Terminal)
     linhaNTerminal, colunaNTerminal = pega_linha_coluna(NTerminal)
-    linhaTerminal, colunaTerminal = pega_linha_coluna(Terminal)
+    linhaTerminal, colunaTerminal = pega_linha_coluna(Terminal) #erro aqui, continuar amanha
 
     return tabela_preditiva[linhaNTerminal][colunaTerminal]
 
@@ -53,8 +49,6 @@ def pega_vetor_producoes(NTerminal, Terminal):
 
 
 
-
-#******************************************* PILHA ****************************************************
 
 class Nodo:
 
@@ -115,30 +109,10 @@ class Pilha:
         else:
             return self.lista[len(self.lista)-1]
 
-
-#******************************************* ARVORE ****************************************************
-class Arvore:
-    def __init__(self, chave=None, esquerda=None, direita=None):
-        self.chave = chave
-        self.esquerda = esquerda
-        self.direita = direita
-        self.lista = []
-
-
-    def pega_subarvore(self):
-        return '%s\n %s' % (self.chave, self.lista)
-
-def estrutura_floresta(floresta):
-    for j in range(0, len(floresta)):
-        print(floresta[j])
-
-
-
-
-#********************************** ALGORITMO ANALISE PREDITIVA *******************************************
 def algoritmo_analise_preditiva(path):
-    #Lista de terminais
-    terminal = ["programa", "identificador", "inicio", "fim", "tipo", ";", ":", "se", "(", ")", "entao", "senao", "enquanto", "faca", "repita", "<--", "op_rela", "+", "-", "*", "/", "^", "numero", "letra", ",", "$"]
+    #Lista de terminais, filtrado pelas strings
+    terminal = {member.value for member in TokenEnum if isinstance(member.value, str)}
+    print(terminal)
 
     #Inicializa Floresta, Pilha, empilha simbolo inicial "S"
     pilha = Pilha()
@@ -148,7 +122,7 @@ def algoritmo_analise_preditiva(path):
     analyzer = Analyzer(path)
     token = analyzer.lex()
     #Atribui token.tipo à variavel proxToken
-    proxToken = token.tipo
+    proxToken = (token.nome).name 
 
     #Enquanto pilha não for vazia
     while pilha.pilha_vazia() == False:
@@ -157,7 +131,7 @@ def algoritmo_analise_preditiva(path):
             if x == proxToken:
                 pilha.pop()
                 token = analyzer.lex()
-                proxToken = token.tipo
+                proxToken = (token.nome).name 
             else:
                 print(f"ERRO! TOKEN \"{token.atributo}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
                 exit()
@@ -193,5 +167,6 @@ def algoritmo_analise_preditiva(path):
 
 
 if __name__ == '__main__':
-    floresta = algoritmo_analise_preditiva()
-    estrutura_floresta(floresta)
+
+    caminho_arquivo = os.path.join(os.getcwd(), "exemplo.txt")
+    algoritmo_analise_preditiva(caminho_arquivo)

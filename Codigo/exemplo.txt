@@ -1,0 +1,6 @@
+function teste()
+{
+repita
+	id = 2;
+ate(2>1)
+}

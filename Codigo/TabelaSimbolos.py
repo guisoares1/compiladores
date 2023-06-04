@@ -17,11 +17,11 @@ class TabelaSimbolos:
   table:List[Symbol] = field(default_factory=list)
 
   def insert(self, token:Token):
-    symbol = Symbol(Token(token.name).name, Token(token.attribute).name)
+    symbol = Symbol((token.nome).name, token.atributo)
     if not symbol in self.table:
       symbol.pos = len(self.table) + 1
       self.table.append(symbol)
-      token.attribute = symbol.pos
+      token.atributo = symbol.pos
       #print(f'Symbol {symbol} added to the table.')
     else:
       print(f'Simbolo {symbol} já existe.')
