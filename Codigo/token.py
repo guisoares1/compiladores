@@ -32,12 +32,13 @@ class TokenEnum(Enum):
     DIV = '/'
     EXP = '^'
     ATRIB = '='
-    CONINT = 'CONSINT'
+    CONINT = 'CONSTINT'
     INUM = auto()
     PFNUM = auto() # ponto fixo (PF) 
     NCNUM = auto() # notação científica (NC)
+    CONSTFLOAT = 'CONSTFLOAT'
     ATE = 'ATE' 
-    CONCHAR = 'CONSCHAR'
+    CONCHAR = 'CONSTCHAR'
     EOF = '$' # end of file $
     ENTAO = "ENTAO"
     REPITA = "REPITA"

@@ -21,7 +21,7 @@ class TabelaSimbolos:
     if not symbol in self.table:
       symbol.pos = len(self.table) + 1
       self.table.append(symbol)
-      token.atributo = symbol.pos
+     # token.atributo = symbol.pos
       #print(f'Symbol {symbol} added to the table.')
     else:
       print(f'Simbolo {symbol} já existe.')

@@ -1,6 +1,5 @@
 function teste()
 {
-repita
-	testes = 2;
-ate(2>1)
+teste = 'teste';
 }
+$

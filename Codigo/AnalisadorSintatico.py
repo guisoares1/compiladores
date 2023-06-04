@@ -127,7 +127,6 @@ class Pilha:
 def algoritmo_analise_preditiva(path):
     #Lista de terminais, filtrado pelas strings
     terminal = {member.value for member in TokenEnum if isinstance(member.value, str)}
-    print(terminal)
 
     #Inicializa Floresta, Pilha, empilha simbolo inicial "S"
     pilha = Pilha()
@@ -142,8 +141,8 @@ def algoritmo_analise_preditiva(path):
     #Enquanto pilha não for vazia
     while pilha.pilha_vazia() == False:
         x = pilha.pega_topo()
+        print(pilha, x)
         if x in terminal:
-            print(x, proxToken)
             if x == proxToken:
                 pilha.pop()
                 token = analyzer.lex()
@@ -163,6 +162,7 @@ def algoritmo_analise_preditiva(path):
                 pilha.pop()
                 #Pega vetor de producao correspondente
                 producao = pega_vetor_producoes(x, proxToken)
+                #print(producao)
                 #Empilha todos os simbolos na ordem inversa
                 if producao[0] != 'ε':
                     for i in range (0, len(producao)):

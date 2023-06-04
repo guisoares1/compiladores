@@ -300,7 +300,7 @@ class Analyzer:
             lookahead = True
             self.source_code.seek(-1, 1)
             lexema = lexema[:-1]
-            token = Token(TokenEnum.CONINT, TokenEnum.PFNUM, line, col)
+            token = Token(TokenEnum.CONSTFLOAT, TokenEnum.PFNUM, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
             return token
@@ -310,7 +310,7 @@ class Analyzer:
             lookahead = True
             self.source_code.seek(-1, 1)
             lexema = lexema[:-1]
-            token = Token(TokenEnum.CONINT, TokenEnum.NCNUM, line, col)
+            token = Token(TokenEnum.CONSTFLOAT, TokenEnum.NCNUM, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
             return token 
@@ -323,8 +323,6 @@ class Analyzer:
           case 't20':
             state = 0
             lookahead = True
-            self.source_code.seek(-1, 1)
-            lexema = lexema[:-1]
             token = Token(TokenEnum.CONCHAR, lexema, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
