@@ -32,7 +32,7 @@ class Analyzer:
     col = 0
     lookahead = False #flag pra identificar se fez lookahead ou não
    
-    st = TabelaSimbolos() # pensr em comao representar o lexema na tabela
+    st = TabelaSimbolos() 
     while(True):
         
         s = str(state)
@@ -130,13 +130,13 @@ class Analyzer:
             state = 0
             token = Token(TokenEnum.RELOP, TokenEnum.LE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.RELOP 
+            return token
           
           case 't11':
             state = 0
             token = Token(TokenEnum.RELOP, TokenEnum.NE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.RELOP 
+            return token 
           
           case 't12':
             state = 0
@@ -144,13 +144,13 @@ class Analyzer:
             self.source_code.seek(-1, 1)
             token = Token(TokenEnum.RELOP, TokenEnum.LT, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.RELOP
+            return token
           
           case 't13':
             state = 0
             token = Token(TokenEnum.RELOP, TokenEnum.GE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.RELOP 
+            return token
           
           case 't14':
             state = 0
@@ -158,13 +158,13 @@ class Analyzer:
             self.source_code.seek(-1, 1)
             token = Token(TokenEnum.RELOP, TokenEnum.GT, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.RELOP
+            return token
           
           case 't15':
             state = 0
             token = Token(TokenEnum.RELOP, TokenEnum.EQ, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.RELOP
+            return token
           
           case 't16':
             state = 0
@@ -172,56 +172,56 @@ class Analyzer:
             self.source_code.seek(-1, 1)
             token = Token(TokenEnum.ATRIB, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.ATRIB
+            return token
           
           ###################### Monotoken ########################
           case 't1':
             state = 0
             token = Token(TokenEnum.APAR, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.APAR 
+            return token 
           
           case 't2':
             state = 0
             token = Token(TokenEnum.FPAR, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.FPAR 
+            return token
           
           case 't3':
             state = 0
             token = Token(TokenEnum.SUM, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.SUM
+            return token
           
           case 't4':
             state = 0
             token = Token(TokenEnum.DIF, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.DIF
+            return token
           
           case 't5':
             state = 0
             token = Token(TokenEnum.MULT, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.MULT
+            return token
           
           case 't6':
             state = 0
             token = Token(TokenEnum.EXP, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.EXP
+            return token
           
           case 't7':
             state = 0
             token = Token(TokenEnum.PVIRGULA, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.PVIRGULA
+            return token
           
           case 't8':
             state = 0
             token = Token(TokenEnum.VIRGULA, TokenEnum.NONE, line, col)
             print(f"lex - Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.VIRGULA
+            return token
           
           case't22':
             state = 0
@@ -229,7 +229,7 @@ class Analyzer:
             self.source_code.seek(-1, 1)
             token = Token(TokenEnum.DIV, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.DIV 
+            return token
         
           ##################### NUMERO #####################
           case '54':
@@ -274,30 +274,30 @@ class Analyzer:
             lookahead = True
             self.source_code.seek(-1, 1)
             lexema = lexema[:-1]
-            token = Token(TokenEnum.INUM, lexema, line, col, )
+            token = Token(TokenEnum.CONINT, TokenEnum.INUM, line, col, )
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.INUM 
+            return token 
           
           case 't18':
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
             lexema = lexema[:-1]
-            token = Token(TokenEnum.PFNUM, lexema, line, col)
+            token = Token(TokenEnum.CONINT, TokenEnum.PFNUM, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.PFNUM 
+            return token
           
           case 't19':
             state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
             lexema = lexema[:-1]
-            token = Token(TokenEnum.NCNUM, lexema, line, col)
+            token = Token(TokenEnum.CONINT, TokenEnum.NCNUM, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.NCNUM 
+            return token 
           
           #################### ConstChar ####################
           case '62':
@@ -312,7 +312,7 @@ class Analyzer:
             token = Token(TokenEnum.CONCHAR, lexema, line, col)
             st.insert(token)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.CONCHAR 
+            return token 
           
           ################### comentario ###################
           case '17':
@@ -361,7 +361,7 @@ class Analyzer:
             token = Token(TokenEnum.ID, lexema, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
             st.insert(token)
-            return TokenEnum.ID
+            return token
           
           ################### Function ###################
           case '5':
@@ -437,7 +437,7 @@ class Analyzer:
             lexema = lexema[:-1]
             token = Token(TokenEnum.FUNCTION, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.FUNCTION
+            return token
 
           ################### Float ###################
           
@@ -486,7 +486,7 @@ class Analyzer:
             lexema = lexema[:-1]
             token = Token(TokenEnum.FLOAT, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.FLOAT
+            return token
           
           ################### faca ###################
           case '20':
@@ -519,7 +519,7 @@ class Analyzer:
             lexema = lexema[:-1]
             token = Token(TokenEnum.FACA, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.FACA
+            return token
           
           ################### int ###################
           case '19':
@@ -551,7 +551,7 @@ class Analyzer:
             lexema = lexema[:-1]
             token = Token(TokenEnum.INT, lexema, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.INT
+            return token
           
           ################### char ###################
           case '7':
@@ -591,7 +591,7 @@ class Analyzer:
             lexema = lexema[:-1] 
             token = Token(TokenEnum.CHAR, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.CHAR
+            return token
         
           ################### senao ###################
           case '8':
@@ -639,7 +639,7 @@ class Analyzer:
             lexema = lexema[:-1] 
             token = Token(TokenEnum.SENAO, TokenEnum.NONE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.SENAO
+            return token
         
           ################### se ###################
           case 't31':
@@ -699,7 +699,7 @@ class Analyzer:
             lexema = lexema[:-1] 
             token = Token(TokenEnum.ENTAO, TokenEnum.ENTAO, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.ENTAO
+            return token
 
           ################### enquanto ###################
 
@@ -764,7 +764,7 @@ class Analyzer:
             lexema = lexema[:-1] 
             token = Token(TokenEnum.ENQUANTO, TokenEnum.ENQUANTO, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.ENQUANTO
+            return token
           
           ################### repita ###################
           case '9':
@@ -820,7 +820,7 @@ class Analyzer:
             lexema = lexema[:-1] 
             token = Token(TokenEnum.REPITA, TokenEnum.REPITA, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.REPITA
+            return token
 
           ################### ate ###################
           case '10':
@@ -848,11 +848,12 @@ class Analyzer:
             lexema = lexema[:-1] 
             token = Token(TokenEnum.ATE, TokenEnum.ATE, line, col)
             print(f"[lexical] Token {token.name}, {token.attribute}, w: {lexema.strip()}")
-            return TokenEnum.ATE
+            return token
           ###################
           case 't9':
+            token = Token(TokenEnum.EOF, TokenEnum.ATE, line, col)
             print("lex - Fim do arquivo")
-            return TokenEnum.EOF
+            return token
 
 
 

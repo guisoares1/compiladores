@@ -3,43 +3,44 @@ from enum import Enum, auto
 
 class TokenEnum(Enum):
     NONE = -1
-    FUNCTION = auto()
-    ACHA = auto() # {
-    FCHA = auto() # }
-    DPONTOS = auto() # :
-    CHAR = auto()
-    INT = auto()
-    FLOAT = auto()
-    ID = auto()
-    VIRGULA = auto() # ,
-    PVIRGULA = auto() # ;
-    SE = auto() 
-    SENAO = auto()
-    APAR = auto() # (
-    FPAR = auto() # ) 
-    ENQUANTO = auto()
-    FACA = auto()
-    RELOP = auto()
-    LE = auto() # <=
-    LT = auto() # <
-    GE = auto() # >=
-    GT = auto() # >
-    EQ = auto() # ==
-    NE = auto() # <>
-    SUM = auto()
-    DIF = auto()
-    MULT = auto()
-    DIV = auto()
-    EXP = auto()
-    ATRIB = auto() # = 
+    FUNCTION = 'FUNCTION'
+    ACHA = '{' 
+    FCHA = '}'
+    DPONTOS = ':'
+    CHAR = 'CHAR'
+    INT = 'INT'
+    FLOAT = 'FLOAT'
+    ID = 'ID'
+    VIRGULA = ','
+    PVIRGULA = ';'
+    SE = 'SE' 
+    SENAO = 'SENAO'
+    APAR = '('
+    FPAR = ')' 
+    ENQUANTO = 'ENQUANTO'
+    FACA = 'FACA'
+    RELOP = 'RELOP'
+    LE = '<='
+    LT = '<'
+    GE = '>='
+    GT = '>'
+    EQ = '=='
+    NE = '<>'
+    SUM = '+'
+    DIF = '-'
+    MULT = '*'
+    DIV = '/'
+    EXP = '^'
+    ATRIB = '='
+    CONINT = 'CONSINT'
     INUM = auto()
     PFNUM = auto() # ponto fixo (PF) 
     NCNUM = auto() # notação científica (NC)
     ATE = auto() 
-    CONCHAR = auto() # constante char
+    CONCHAR = 'CONSCHAR'
     EOF = auto() # end of file $
-    ENTAO = auto()
-    REPITA = auto()
+    ENTAO = "ENTAO"
+    REPITA = "REPITA"
 
     # tipos já existentes antes
     PROGRAMA = auto()
@@ -66,7 +67,7 @@ class TokenEnum(Enum):
 class Token: # trocar nome atributos
     """Tokens serão representados na forma <Token.name, Token.Attribute>"""
     name: int
-    attribute: str
+    attribute: int
     line: int
     col: int
 
