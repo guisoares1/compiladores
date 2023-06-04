@@ -17,7 +17,7 @@ class TabelaSimbolos:
   table:List[Symbol] = field(default_factory=list)
 
   def insert(self, token:Token):
-    symbol = Symbol((token.nome).name, token.atributo)
+    symbol = Symbol((token.nome).value, token.atributo)
     if not symbol in self.table:
       symbol.pos = len(self.table) + 1
       self.table.append(symbol)
