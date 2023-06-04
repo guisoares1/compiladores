@@ -49,6 +49,4 @@ class Token:
     linha: int
     coluna: int
 
-    def __repr__(self) -> str:
-        return f'Token <{Token(self.nome).nome}, {Token(self.atributo).nome}> l:{self.linha} c:{self.coluna}'
 

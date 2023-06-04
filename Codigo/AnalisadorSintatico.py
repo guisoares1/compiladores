@@ -23,32 +23,47 @@ numero_colunasVet = df2.shape[1]
 
 #************************** FUNÇÕES AUXILIARES ************************************
 
-#Função para pegar a tupla(linhas,coluna) de determinado simbolo. Ex: pegaLinhaColunaNaoTerminal("S")
-def pega_linha_coluna(simbolo):
-    for i in range(0,numero_linhasTab):
-        for j in range(0,numero_colunasTab):
-            if tabela_preditiva[i][j] == simbolo:
-                return i,j
-    return None
+def pega_colum_preditiva(simbolo):
+    if simbolo in df1.columns:
+        return df1.columns.get_loc(simbolo)
+
+    return -1
+
+def pega_linha_preditiva(simbolo):
+    linha_encontrada = df1[df1['NT'].str.contains(simbolo)].index[0]
+    # Verificando se o valor foi encontrado
+    return linha_encontrada
+
 
 #Função que retorna valores da tabela, dado um Não Terminal e um Terminal. Ex: pegaValorTabela("declaracao_das_variaveis","identificador")
 def pegaValorTabela(NTerminal, Terminal):
-    linhaNTerminal, colunaNTerminal = pega_linha_coluna(NTerminal)
-    linhaTerminal, colunaTerminal = pega_linha_coluna(Terminal) #erro aqui, continuar amanha
-
+    linhaNTerminal = pega_linha_preditiva(NTerminal)
+    colunaTerminal = pega_colum_preditiva(Terminal) #erro aqui, continuar amanha
+    print(tabela_preditiva[linhaNTerminal][colunaTerminal])
     return tabela_preditiva[linhaNTerminal][colunaTerminal]
 
 #Função que retorna a producao correta, dado um Não Terminal e um Terminal. Ex: pega_vetor_producoes("S","programa")
 def pega_vetor_producoes(NTerminal, Terminal):
-    linhaNTerminal, colunaNTerminal = pega_linha_coluna(NTerminal)
-    linhaTerminal, colunaTerminal = pega_linha_coluna(Terminal)
+    linhaNTerminal = pega_linha_preditiva(NTerminal)
+    colunaTerminal = pega_colum_preditiva(Terminal)
     valor = tabela_preditiva[linhaNTerminal][colunaTerminal]
+    print(valor)
     producao = vetor_producoes[valor-1][1]
+    # vetor ao contrario para empilhar corretamente
+    producao_copia = producao.split()
+    producao_reverse = producao_copia[::-1]
+    return producao_reverse
 
-    return producao.split()
 
-
-
+#******************************************* ARVORE ****************************************************
+class Arvore:
+    def __init__(self, chave=None, esquerda=None, direita=None):
+        self.chave = chave
+        self.esquerda = esquerda
+        self.direita = direita
+        self.lista = []
+    def pega_subarvore(self):
+        return '%s\n %s' % (self.chave, self.lista)
 
 class Nodo:
 
@@ -122,28 +137,27 @@ def algoritmo_analise_preditiva(path):
     analyzer = Analyzer(path)
     token = analyzer.lex()
     #Atribui token.tipo à variavel proxToken
-    proxToken = (token.nome).name 
+    proxToken = (token.nome).value 
 
     #Enquanto pilha não for vazia
     while pilha.pilha_vazia() == False:
         x = pilha.pega_topo()
         if x in terminal:
+            print(x, proxToken)
             if x == proxToken:
                 pilha.pop()
                 token = analyzer.lex()
-                proxToken = (token.nome).name 
+                proxToken = (token.nome).value 
             else:
-                print(f"ERRO! TOKEN \"{token.atributo}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
+                print(f"ERRO! TOKEN \"{proxToken}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
                 exit()
         else:
             valor = pegaValorTabela(x, proxToken)
+            print(x,proxToken, valor)
             if valor == -1:
-                print(f"ERRO! TOKEN \"{token.atributo}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
+                print(f"ERRO! TOKEN \"{(token.nome).value}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
                 exit()
             else:
-
-                #Pega vetor de producao correspondente
-                producao = pega_vetor_producoes(x, proxToken)
 
                 #Retira o topo da pilha
                 pilha.pop()

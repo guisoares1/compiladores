@@ -29,7 +29,7 @@ class Analyzer:
   def lex(self):
     state = 0
     lexema = ""
-    line = 0
+    line = 1
     col = 0
     lookahead = False #flag pra identificar se fez lookahead ou não
    
@@ -40,6 +40,7 @@ class Analyzer:
         if not s.startswith('t'): 
           try:
             c = self.source_code.read(1) #se não fez lookahead, e não está em um estado final, lê next char
+            print(c)
             c = c.decode('UTF-8') # resolver problema utf
             if not c in ['\t', '\r', '\n', ' ', ',']:
               lexema += c 
@@ -47,10 +48,9 @@ class Analyzer:
             print("Fim do arquivo, “cadeia rejeitada")
             break
 
-        
-        if c == '\n':
+        if c in ['\t', '\n','\r']:
           line += 1
-          col = 0
+          col = 1
 
         col += 1
 
@@ -65,7 +65,6 @@ class Analyzer:
             elif c in self.digitos: # digitos
               state = 54 # numero diagrama 
             elif c == 'f':
-              print("teste f", lexema)
               state = 5
             elif c == 'i':
               state = 6
@@ -85,6 +84,10 @@ class Analyzer:
               state = 't1'
             elif c == ')':
               state = 't2'
+            elif c == '{':
+              state = 't36'
+            elif c == '}':
+              state = 't37'  
             elif c == '+':
               state = 't3'
             elif c == '-':
@@ -95,7 +98,7 @@ class Analyzer:
               state = 17
             elif c == '^':
               state = 't6'
-            elif c in ['\t', '\n', ' ']: # pulo de linha
+            elif c in ['\t', '\n', '\r']: # pulo de linha
               state = 14
             elif c == ';':
               state = 't7'
@@ -224,6 +227,18 @@ class Analyzer:
             print(f"lex - Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
             return token
           
+          case 't36':
+            state = 0
+            token = Token(TokenEnum.ACHA, TokenEnum.NONE, line, col)
+            print(f"lex - Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
+            return token
+          
+          case 't37':
+            state = 0
+            token = Token(TokenEnum.FCHA, TokenEnum.NONE, line, col)
+            print(f"lex - Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
+            return token
+          
           case't22':
             state = 0
             lookahead = True
@@ -338,15 +353,17 @@ class Analyzer:
 
           ################### tab ###################
           case '14':
-            if c in ['\n', '\t', '\r', ' ']:
+            if c in ['\n', '\t', '\r']:
               state = 14
             else:
               state = 't21'
 
           case 't21':
-            state = 0
             lookahead = True
             self.source_code.seek(-1, 1)
+            lexema = lexema[:-1]
+            state = 0
+
 
           ################### ID ###################
           case '12':
@@ -367,7 +384,6 @@ class Analyzer:
           
           ################### Function ###################
           case '5':
-            print(c," teste 1", lexema, (c not in self.digitos) and (c not in self.letra_))
             if (c not in self.digitos) and (c not in self.letra_):
               state = 't24'  # ID lookahead 
             elif c == 'u':
@@ -380,7 +396,6 @@ class Analyzer:
               state = '12'  # outros
 
           case '18':
-            print(c," teste 2")
             if c == 'n':    # fun
               state = 21
             elif (c not in self.digitos) and (c not in self.letra_): 
@@ -773,21 +788,21 @@ class Analyzer:
           ################### repita ###################
           case '9':
             if c == 'e':   # re
-              state = 55
+              state = 63
             elif (c not in self.digitos) and (c not in self.letra_): 
               state = 't24'   # ID lookahead 
             else:
               state = '12'  # outros
           
-          case '55':
+          case '63':
             if c == 'p':   # rep
-              state = 56
+              state = 64
             elif (c not in self.digitos) and (c not in self.letra_): 
               state = 't24'   # ID lookahead 
             else:
               state = '12'  # outros
           
-          case '56':
+          case '64':
             if c == 'i':   # repi
               state = 57
             elif (c not in self.digitos) and (c not in self.letra_): 
@@ -797,21 +812,21 @@ class Analyzer:
           
           case '57':
             if c == 't':   # repit
-              state = 58
+              state = 65
             elif (c not in self.digitos) and (c not in self.letra_): 
               state = 't24'   # ID lookahead 
             else:
               state = '12'  # outros
 
-          case '58':
+          case '65':
             if c == 'a':   # repita
-              state = 58
+              state = 66
             elif (c not in self.digitos) and (c not in self.letra_): 
               state = 't24'   # ID lookahead 
             else:
               state = '12'  # outros
           
-          case '58':
+          case '66':
             if (c not in self.digitos) and (c not in self.letra_):
                 state = 't34'
             else:
