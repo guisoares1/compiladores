@@ -5,37 +5,25 @@ from lexico import Analyzer
 import os
 
 #Vetor de Producoes
-df2 = pd.read_excel('producoes.xlsx')
-vetor_producoes = np.asarray(df2)
+dataframe_producoes = pd.read_excel('producoes.xlsx')
+vetor_producoes = np.asarray(dataframe_producoes)
 
 #Tabela de Análise Preditiva
-df1 = pd.read_excel('preditivo.xlsx')
-tabela_preditiva = np.asarray(df1)
-
-#Numero de Linhas e Colunas da Tabela de Análise Preditiva
-numero_linhasTab = df1.shape[0]
-numero_colunasTab = df1.shape[1]
-
-#Numero de Linhas e Colunas do Vetor de Producoes
-numero_linhasVet = df2.shape[0]
-numero_colunasVet = df2.shape[1]
-
-
-#************************** FUNÇÕES AUXILIARES ************************************
+dataframe_preditivo = pd.read_excel('preditivo.xlsx')
+tabela_preditiva = np.asarray(dataframe_preditivo)
 
 def pega_colum_preditiva(simbolo):
-    if simbolo in df1.columns:
-        return df1.columns.get_loc(simbolo)
+    if simbolo in dataframe_preditivo.columns:
+        return dataframe_preditivo.columns.get_loc(simbolo)
 
     return -1
 
 def pega_linha_preditiva(simbolo):
-    linha_encontrada = df1[df1['NT'].str.contains(simbolo)].index[0]
+    linha_encontrada = dataframe_preditivo[dataframe_preditivo['NT'].str.contains(simbolo)].index[0]
     # Verificando se o valor foi encontrado
     return linha_encontrada
 
 
-#Função que retorna valores da tabela, dado um Não Terminal e um Terminal. Ex: pegaValorTabela("declaracao_das_variaveis","identificador")
 def pegaValorTabela(NTerminal, Terminal):
     print(NTerminal, Terminal)
     linhaNTerminal = pega_linha_preditiva(NTerminal)
@@ -43,9 +31,8 @@ def pegaValorTabela(NTerminal, Terminal):
     colunaTerminal = pega_colum_preditiva(Terminal) #erro aqui, continuar amanha
     print(linhaNTerminal, colunaTerminal)
     print(tabela_preditiva[linhaNTerminal][colunaTerminal])
-    return tabela_preditiva[linhaNTerminal][colunaTerminal]
+    return tabela_preditiva[linhaNTerminal][colunaTerminal] # retorna valor da tabela preditiva
 
-#Função que retorna a producao correta, dado um Não Terminal e um Terminal. Ex: pega_vetor_producoes("S","programa")
 def pega_vetor_producoes(NTerminal, Terminal):
     linhaNTerminal = pega_linha_preditiva(NTerminal)
     colunaTerminal = pega_colum_preditiva(Terminal)
@@ -56,17 +43,6 @@ def pega_vetor_producoes(NTerminal, Terminal):
     producao_copia = producao.split()
     producao_reverse = producao_copia[::-1]
     return producao_reverse
-
-
-#******************************************* ARVORE ****************************************************
-class Arvore:
-    def __init__(self, chave=None, esquerda=None, direita=None):
-        self.chave = chave
-        self.esquerda = esquerda
-        self.direita = direita
-        self.lista = []
-    def pega_subarvore(self):
-        return '%s\n %s' % (self.chave, self.lista)
 
 class Nodo:
 
@@ -151,13 +127,13 @@ def algoritmo_analise_preditiva(path):
                 token = analyzer.lex()
                 proxToken = (token.nome).value 
             else:
-                print(f"ERRO! TOKEN \"{proxToken}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
+                print(f"TOKEN \"{proxToken}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
                 exit()
         else:
             valor = pegaValorTabela(x, proxToken)
             # print(x,proxToken, valor)
             if valor == -1:
-                print(f"ERRO! TOKEN \"{(token.nome).value}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
+                print(f"TOKEN \"{(token.nome).value}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
                 exit()
             else:
 
@@ -173,12 +149,12 @@ def algoritmo_analise_preditiva(path):
 
     #Ao sair do while, se o proxToken não for "$", erro!
     if proxToken != "$":
-        print(f"ERRO! TOKEN \"{token.atributo}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
+        print(f"TOKEN \"{token.atributo}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
         exit()
 
     #Se o proxToken for "$", sucesso!
     else:
-        print("SUCESSO! SEU PROGRAMA FOI ACEITO PELO ANALISADOR SINTÁTICO!")
+        print("SEU PROGRAMA FOI ACEITO PELO ANALISADOR SINTÁTICO!")
 
 
 
