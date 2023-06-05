@@ -1,6 +1,6 @@
 function teste()
 {
-int : x;
+int : x ;
 repita
    ide = 2;
 ate(1>3)

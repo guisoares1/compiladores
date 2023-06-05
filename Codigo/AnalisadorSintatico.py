@@ -144,7 +144,7 @@ def algoritmo_analise_preditiva(path):
     #Enquanto pilha não for vazia
     while pilha.pilha_vazia() == False:
         x = pilha.pega_topo()
-        # print(pilha, x)
+        print(pilha, x)
         if x in terminal:
             if x == proxToken:
                 pilha.pop()
