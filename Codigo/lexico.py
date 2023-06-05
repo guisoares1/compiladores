@@ -48,10 +48,12 @@ class Analyzer:
             print("Fim do arquivo, “cadeia rejeitada")
             break
 
-        if c in ['\t', '\n','\r']:
+        if c in ['\\t', '\\n','\\r']:
           line += 1
           col = 1
 
+        if line>100:
+          break
         col += 1
 
         match s:
@@ -67,7 +69,7 @@ class Analyzer:
             elif c == 'f':
               state = 5
             elif c == 'i':
-              state = 6
+              state = 72
             elif c == 'c':
               state = 7
             elif c == 's':
@@ -98,12 +100,14 @@ class Analyzer:
               state = 17
             elif c == '^':
               state = 't6'
-            elif c in ['\t', '\n', '\r']: # pulo de linha
+            elif c in ['\\t', '\\n', '\\r']: # pulo de linha
               state = 14
             elif c == ';':
               state = 't7'
             elif c == ',':
               state = 't8'
+            elif c == ':':
+              state = 't38'
             elif c == '\'':
               state = 62
             elif c == '$': # fim arquivo
@@ -864,6 +868,13 @@ class Analyzer:
             self.source_code.seek(-1, 1)
             lexema = lexema[:-1] 
             token = Token(TokenEnum.ATE, TokenEnum.ATE, line, col)
+            print(f"[lexical] Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
+            return token
+          
+          case 't38':
+            state = 0
+            lookahead = True
+            token = Token(TokenEnum.DPONTOS, TokenEnum.ATE, line, col)
             print(f"[lexical] Token {token.nome}, {token.atributo}, w: {lexema.strip()}")
             return token
           ###################

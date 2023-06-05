@@ -1,5 +1,8 @@
 function teste()
 {
-teste = 'teste';
+int : x;
+repita
+   ide = 2;
+ate(1>3)
 }
 $

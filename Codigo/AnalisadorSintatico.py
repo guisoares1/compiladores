@@ -37,8 +37,11 @@ def pega_linha_preditiva(simbolo):
 
 #Função que retorna valores da tabela, dado um Não Terminal e um Terminal. Ex: pegaValorTabela("declaracao_das_variaveis","identificador")
 def pegaValorTabela(NTerminal, Terminal):
+    print(NTerminal, Terminal)
     linhaNTerminal = pega_linha_preditiva(NTerminal)
+    print("aqui")
     colunaTerminal = pega_colum_preditiva(Terminal) #erro aqui, continuar amanha
+    print(linhaNTerminal, colunaTerminal)
     print(tabela_preditiva[linhaNTerminal][colunaTerminal])
     return tabela_preditiva[linhaNTerminal][colunaTerminal]
 
@@ -47,7 +50,7 @@ def pega_vetor_producoes(NTerminal, Terminal):
     linhaNTerminal = pega_linha_preditiva(NTerminal)
     colunaTerminal = pega_colum_preditiva(Terminal)
     valor = tabela_preditiva[linhaNTerminal][colunaTerminal]
-    print(valor)
+    # print(valor)
     producao = vetor_producoes[valor-1][1]
     # vetor ao contrario para empilhar corretamente
     producao_copia = producao.split()
@@ -141,7 +144,7 @@ def algoritmo_analise_preditiva(path):
     #Enquanto pilha não for vazia
     while pilha.pilha_vazia() == False:
         x = pilha.pega_topo()
-        print(pilha, x)
+        # print(pilha, x)
         if x in terminal:
             if x == proxToken:
                 pilha.pop()
@@ -152,7 +155,7 @@ def algoritmo_analise_preditiva(path):
                 exit()
         else:
             valor = pegaValorTabela(x, proxToken)
-            print(x,proxToken, valor)
+            # print(x,proxToken, valor)
             if valor == -1:
                 print(f"ERRO! TOKEN \"{(token.nome).value}\" NÃO ERA ESPERADO!\nErro presente na Linha: {token.linha} Coluna: {token.coluna} ".format(token.atributo))
                 exit()
