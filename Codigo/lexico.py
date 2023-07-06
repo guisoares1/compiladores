@@ -42,7 +42,7 @@ class Analyzer:
             c = self.source_code.read(1) #se não fez lookahead, e não está em um estado final, lê next char
             print(c)
             c = c.decode('UTF-8') # resolver problema utf
-            if not c in ['\t', '\r', '\n', ' ', ',']:
+            if not c in ['\t', '\r', '\n', ' ']:
               lexema += c 
           except StopIteration:
             print("Fim do arquivo, “cadeia rejeitada")

@@ -143,7 +143,7 @@ def algoritmo_analise_preditiva(path):
                 producao = pega_vetor_producoes(x, proxToken)
                 #print(producao)
                 #Empilha todos os simbolos na ordem inversa
-                if producao[0] != 'ε':
+                if producao[0] != "ε":
                     for i in range (0, len(producao)):
                         pilha.push(producao[i])
 
@@ -155,8 +155,6 @@ def algoritmo_analise_preditiva(path):
     #Se o proxToken for "$", sucesso!
     else:
         print("SEU PROGRAMA FOI ACEITO PELO ANALISADOR SINTÁTICO!")
-
-
 
 
 if __name__ == '__main__':
